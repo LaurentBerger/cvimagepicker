@@ -6,12 +6,12 @@
 #include <opencv2/core/utils/logger.hpp>
 
 #define KEY_CODE_QUIT 27
-#define KEY_CODE_ENTER '\r'
+#define KEY_CODE_ENTER 13
 #define KEY_CODE_PAGE_UP     -10
 #define KEY_CODE_PAGE_DOWN      +10
 #define KEY_CODE_ARROW_LEFT -1
 #define KEY_CODE_ARROW_UP   -2
-#define KEY_CODE_ARROW_DROITE +1
+#define KEY_CODE_ARROW_RIGHT +1
 #define KEY_CODE_ARROW_DOWN    +2
 #define KEY_CODE_HOME 5
 #define KEY_CODE_MODE_IMAGE    100
@@ -73,12 +73,12 @@ public:
             updateSelection();
             cv::imshow(windowName_, fileBrowser_);
             int code = cv::waitKeyEx(20);
-            if (verbose_ && code > 0)
-                std::cout << "key " << std::hex << code << std::endl;
             if (platformKeyCode_.find(code) == platformKeyCode_.end())
                 keyCode = 0;
             else
                 keyCode = platformKeyCode_[code];
+            if (verbose_ && code > 0)
+                std::cout << "key " << std::hex << code << " -> keycode "<< keyCode << std::endl;
             
             if (keyCode != 0)
             {   
@@ -96,7 +96,7 @@ public:
                     if (actIdx.get().selec2_ < 0)
                         actIdx.get().selec2_ = actIdx.get().selec1_;
                     break;
-                case KEY_CODE_ARROW_DROITE:
+                case KEY_CODE_ARROW_RIGHT:
                     step_ = 1;
                     actIdx.get().selec2_ = actIdx.get().selec1_ + step_;
                     if (actIdx.get().selec2_ >= actIdx.get().size_)
@@ -312,11 +312,12 @@ protected:
             platformKeyCode_[0x220000] = KEY_CODE_PAGE_DOWN;
             platformKeyCode_[0x250000] = KEY_CODE_ARROW_LEFT;
             platformKeyCode_[0x260000] = KEY_CODE_ARROW_UP;
-            platformKeyCode_[0x270000] = KEY_CODE_ARROW_DROITE;
+            platformKeyCode_[0x270000] = KEY_CODE_ARROW_RIGHT;
             platformKeyCode_[0x280000] = KEY_CODE_ARROW_DOWN;
             platformKeyCode_[0x240000] = KEY_CODE_HOME;
             platformKeyCode_[27] = KEY_CODE_QUIT;
             platformKeyCode_[int('\t')] = KEY_CODE_ENTER;
+            platformKeyCode_[0xd] = KEY_CODE_ENTER;
         }
         else if (gui == "GTK3")
         {
@@ -324,7 +325,7 @@ protected:
             platformKeyCode_[0x10ff56] = KEY_CODE_PAGE_DOWN;
             platformKeyCode_[0x10ff51] = KEY_CODE_ARROW_LEFT;
             platformKeyCode_[0x10ff52] = KEY_CODE_ARROW_UP;
-            platformKeyCode_[0x10ff53] = KEY_CODE_ARROW_DROITE;
+            platformKeyCode_[0x10ff53] = KEY_CODE_ARROW_RIGHT;
             platformKeyCode_[0x10ff54] = KEY_CODE_ARROW_DOWN;
             platformKeyCode_[0x10001b] = KEY_CODE_QUIT;
             platformKeyCode_[0x10000d] = KEY_CODE_ENTER;
@@ -338,7 +339,7 @@ protected:
             platformKeyCode_[0x10ff56] = KEY_CODE_PAGE_DOWN;
             platformKeyCode_[0xf702] = KEY_CODE_ARROW_LEFT;
             platformKeyCode_[0xf700] = KEY_CODE_ARROW_UP;
-            platformKeyCode_[0xf703] = KEY_CODE_ARROW_DROITE;
+            platformKeyCode_[0xf703] = KEY_CODE_ARROW_RIGHT;
             platformKeyCode_[0xf701] = KEY_CODE_ARROW_DOWN;
             platformKeyCode_[0xd] = KEY_CODE_ENTER;
             platformKeyCode_[0xf72c] = KEY_CODE_HOME;
