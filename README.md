@@ -1,5 +1,5 @@
 # cvimagepicker
-Image file picker using opencv GUI win32, gtk3 and cocoa in c++
+Image file picker using opencv GUI win32, gtk3 and cocoa in c++17
 you can use mouse (Double clicked is not available on macos) or keyboard to select an image
 
 1 To select file  -> Use arrow keys, page up or down to browse images or folder and enter
