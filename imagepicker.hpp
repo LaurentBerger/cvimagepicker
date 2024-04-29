@@ -305,40 +305,55 @@ protected:
 
     void initKeyCodeMap()
     {
-        //std::string gui = cv::currentUIFramework();
-        platformKeyCode_[0x210000] = KEY_CODE_PAGE_UP;
-        platformKeyCode_[0x220000] = KEY_CODE_PAGE_DOWN;
-        platformKeyCode_[0x250000] = KEY_CODE_ARROW_LEFT;
-        platformKeyCode_[0x260000] = KEY_CODE_ARROW_UP;
-        platformKeyCode_[0x270000] = KEY_CODE_ARROW_DROITE;
-        platformKeyCode_[0x280000] = KEY_CODE_ARROW_DOWN;
-        platformKeyCode_[0x240000] = KEY_CODE_HOME;
-        platformKeyCode_[27] = KEY_CODE_QUIT;
-        platformKeyCode_[int('\t')] = KEY_CODE_ENTER;
-
-        platformKeyCode_[0x10ff55] = KEY_CODE_PAGE_UP;
-        platformKeyCode_[0x10ff56] = KEY_CODE_PAGE_DOWN;
-        platformKeyCode_[0x10ff51] = KEY_CODE_ARROW_LEFT;
-        platformKeyCode_[0x10ff52] = KEY_CODE_ARROW_UP;
-        platformKeyCode_[0x10ff53] = KEY_CODE_ARROW_DROITE;
-        platformKeyCode_[0x10ff54] = KEY_CODE_ARROW_DOWN;
-        platformKeyCode_[0x10001b] = KEY_CODE_QUIT;
-        platformKeyCode_[0x10000d] = KEY_CODE_ENTER;
-        platformKeyCode_[0x100066] = KEY_CODE_MODE_FOLDER;
-        platformKeyCode_[0x100069] = KEY_CODE_MODE_IMAGE;
-        platformKeyCode_[0x10ff50] = KEY_CODE_HOME;
-
-        platformKeyCode_[0x10ff55] = KEY_CODE_PAGE_UP;
-        platformKeyCode_[0x10ff56] = KEY_CODE_PAGE_DOWN;
-        platformKeyCode_[0xf702] = KEY_CODE_ARROW_LEFT;
-        platformKeyCode_[0xf700] = KEY_CODE_ARROW_UP;
-        platformKeyCode_[0xf703] = KEY_CODE_ARROW_DROITE;
-        platformKeyCode_[0xf701] = KEY_CODE_ARROW_DOWN;
-        platformKeyCode_[0xd] = KEY_CODE_ENTER;
-        platformKeyCode_[0xf72c] = KEY_CODE_HOME;
+        std::string gui = cv::currentUIFramework();
+        if (gui == "WIN32")
+        {
+            platformKeyCode_[0x210000] = KEY_CODE_PAGE_UP;
+            platformKeyCode_[0x220000] = KEY_CODE_PAGE_DOWN;
+            platformKeyCode_[0x250000] = KEY_CODE_ARROW_LEFT;
+            platformKeyCode_[0x260000] = KEY_CODE_ARROW_UP;
+            platformKeyCode_[0x270000] = KEY_CODE_ARROW_DROITE;
+            platformKeyCode_[0x280000] = KEY_CODE_ARROW_DOWN;
+            platformKeyCode_[0x240000] = KEY_CODE_HOME;
+            platformKeyCode_[27] = KEY_CODE_QUIT;
+            platformKeyCode_[int('\t')] = KEY_CODE_ENTER;
+        }
+        else if (gui == "GTK3")
+        {
+            platformKeyCode_[0x10ff55] = KEY_CODE_PAGE_UP;
+            platformKeyCode_[0x10ff56] = KEY_CODE_PAGE_DOWN;
+            platformKeyCode_[0x10ff51] = KEY_CODE_ARROW_LEFT;
+            platformKeyCode_[0x10ff52] = KEY_CODE_ARROW_UP;
+            platformKeyCode_[0x10ff53] = KEY_CODE_ARROW_DROITE;
+            platformKeyCode_[0x10ff54] = KEY_CODE_ARROW_DOWN;
+            platformKeyCode_[0x10001b] = KEY_CODE_QUIT;
+            platformKeyCode_[0x10000d] = KEY_CODE_ENTER;
+            platformKeyCode_[0x100066] = KEY_CODE_MODE_FOLDER;
+            platformKeyCode_[0x100069] = KEY_CODE_MODE_IMAGE;
+            platformKeyCode_[0x10ff50] = KEY_CODE_HOME;
+        }
+        else if (gui == "COCOA")
+        {
+            platformKeyCode_[0x10ff55] = KEY_CODE_PAGE_UP;
+            platformKeyCode_[0x10ff56] = KEY_CODE_PAGE_DOWN;
+            platformKeyCode_[0xf702] = KEY_CODE_ARROW_LEFT;
+            platformKeyCode_[0xf700] = KEY_CODE_ARROW_UP;
+            platformKeyCode_[0xf703] = KEY_CODE_ARROW_DROITE;
+            platformKeyCode_[0xf701] = KEY_CODE_ARROW_DOWN;
+            platformKeyCode_[0xd] = KEY_CODE_ENTER;
+            platformKeyCode_[0xf72c] = KEY_CODE_HOME;
         
-        platformKeyCode_[int('i')] = KEY_CODE_MODE_IMAGE;
-        platformKeyCode_[0x66] = KEY_CODE_MODE_FOLDER;
+            platformKeyCode_[int('i')] = KEY_CODE_MODE_IMAGE;
+            platformKeyCode_[0x66] = KEY_CODE_MODE_FOLDER;
+        }
+        else
+        {
+            if (verbose_)
+                std::cout << gui << " Unknown HighGUI backend\n";
+            platformKeyCode_[0x10001b] = KEY_CODE_QUIT;
+        if (verbose_)
+            std::cout << gui << " HighGUI backend\n";
+        }
 
     }
     void rectangleSelectedImage()
